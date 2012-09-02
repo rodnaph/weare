@@ -10,7 +10,8 @@
                  [hiccup "1.0.1"]
                  [cheshire "4.0.2"]]
   :dev-dependencies [[midje "1.4.0"]
-                     [lein-midje "1.0.9"]]
+                     [lein-midje "1.0.9"]
+                     [lein-marginalia "0.7.0"]]
   :plugins [[lein-ring "0.7.2"]]
   :main weare.core)
 
