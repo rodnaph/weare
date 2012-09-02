@@ -1,8 +1,16 @@
 
-
+drop table if exists groups;
 drop table if exists users;
+drop table if exists user_groups;
 drop table if exists activity;
 drop table if exists sources;
+
+create table groups (
+    id int unsigned not null auto_increment,
+    title varchar(100) not null,
+    date_created datetime not null,
+    primary key ( id )
+);
 
 create table users (
 	id int unsigned not null auto_increment,
@@ -13,6 +21,14 @@ create table users (
 	unique ( title ),
 	unique ( email ),
 	primary key ( id )
+);
+
+create table user_groups (
+    id int unsigned not null auto_increment,
+    user_id int unsigned not null,
+    group_id int unsigned not null,
+    unique ( user_id, group_id ),
+    primary key ( id )
 );
 
 create table activity (
@@ -35,7 +51,11 @@ create table sources (
 	primary key ( id )
 );
 
+insert into groups ( title, date_created ) values ( 'Default Group', '2012-09-02 16:47:00' );
+
 insert into users ( title, email, pass, date_created ) values ( 'test', 'test@example.com', password('pass'), '2012-09-01 21:17:00' );
+
+insert into user_groups ( user_id, group_id ) values ( 1, 1 );
 
 insert into sources ( users_id, type, value, date_created ) values ( 1, 'github', 'rodnaph', '2012-09-01 21:18:00' );
 
