@@ -11,11 +11,9 @@
   (response/redirect-after-post "/"))
 
 (defn user-login [req]
-  (println "LOGIN PLS")
   (assoc-in (response/redirect "/")
-            [:session :user_id]
-            1))
+            [:session :user_id] 1))
 
 (defn user-logout [req]
-  req)
+  (dissoc (response/redirect "/") :session))
 

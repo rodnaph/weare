@@ -2,10 +2,7 @@
 (ns weare.web.core
   (:use compojure.core
         [weare.web.auth :only [wrap-login]]
-        (ring.middleware [cookies :only [wrap-cookies]]
-                         [session :only [wrap-session]]
-                         [params :only [wrap-params]]
-                         [reload :only [wrap-reload]]
+        (ring.middleware [reload :only [wrap-reload]]
                          [stacktrace :only [wrap-stacktrace]]))
   (:require [cemerick.friend :as friend]
             (cemerick.friend [workflows :as workflows]
@@ -16,6 +13,7 @@
                        [actions :as actions])))
 
 (defroutes user-routes
+  (GET "/" [] "USER PAGE")
   (GET "/account" request "Show Account"))
 
 (defroutes app-routes
@@ -23,9 +21,11 @@
   (GET "/" [] pages/home)
 
   (context "/user" []
-    (friend/wrap-authorize user-routes #{::user}))
+    (wrap-login user-routes))
 
   (GET "/login" [] pages/login)
+  (POST "/login" [] actions/user-login)
+  (ANY "/logout" [] actions/user-logout)
 
   (POST "/jobs" [] actions/job-create)
 
@@ -44,7 +44,6 @@
 (def app
   (-> app-routes
     (handler/site)
-    (wrap-login)
     (wrap-if dev? wrap-stacktrace)
     (wrap-if dev? wrap-reload)))
 
