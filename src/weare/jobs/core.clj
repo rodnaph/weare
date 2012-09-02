@@ -12,16 +12,22 @@
   process them."}
   job-queue (ref []))
 
-(defn- process-job [job]
+(defn- ^{:doc "Process a single job."}
+  process-job [job]
   (println "Processing job:" job))
+
+(defn- ^{:doc "Process all the jobs in the queue, popping them off
+  the head of the queue one ata  time."}
+  process-jobs []
+  (while (not (empty? @job-queue))
+    (dosync
+      (process-job (first @job-queue))
+      (alter job-queue rest))))
 
 (defn- ^{:doc "Listen for jobs being added to the job queue and then
   dispatch them for processing when they are."}
   listen-for-jobs []
-  (while (not (empty? @job-queue))
-    (dosync
-      (process-job (first @job-queue))
-      (alter job-queue rest)))
+  (process-jobs)
   (Thread/sleep job-quiet-time-in-ms)
   (recur))
 
