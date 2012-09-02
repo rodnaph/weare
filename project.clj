@@ -11,7 +11,9 @@
                  [cheshire "4.0.2"]]
   :dev-dependencies [[midje "1.4.0"]
                      [lein-midje "1.0.9"]
-                     [lein-marginalia "0.7.0"]]
+                     [lein-marginalia "0.7.0"]
+                     [com.stuartsierra/lazytest "1.2.3"]]
+  :repositories {"stuart" "http://stuartsierra.com/maven2"}
   :plugins [[lein-ring "0.7.2"]]
   :main weare.core)
 

@@ -12,6 +12,7 @@
   (handler {}) => (contains {:status 302})
 
   (handler {:uri "/login"}) => true
+  (handler {:uri "/logout"}) => true
 
 )
 
