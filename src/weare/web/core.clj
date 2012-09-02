@@ -1,14 +1,20 @@
 
 (ns weare.web.core
   (:use compojure.core
-        [ring.middleware.reload :only [wrap-reload]]
-        [ring.middleware.stacktrace :only [wrap-stacktrace]]
-        [ring.middleware.params :only [wrap-params]])
-  (:require [compojure.handler :as handler]
-            [compojure.route :as route]
-            [weare.web.pages :as pages]
-            [weare.web.actions :as actions])
-  (:gen-class :main true))
+        (ring.middleware [reload :only [wrap-reload]]
+                         [stacktrace :only [wrap-stacktrace]]
+                         [params :only [wrap-params]]
+                         [session :only [wrap-session]]))
+  (:require (compojure [handler :as handler]
+                       [route :as route])
+            (weare.web [pages :as pages]
+                       [actions :as actions])))
+
+(defn wrap-login [handler]
+  (fn [req]
+    (if (get-in req [:session :user_id])
+        (handler req)
+        {:status 301})))
 
 (defroutes app-routes
   (GET "/" [] pages/home)
@@ -26,6 +32,8 @@
 (def app
   (-> app-routes
     (handler/site)
+    (wrap-session)
+    (wrap-login)
     (wrap-if dev? wrap-stacktrace)
     (wrap-if dev? wrap-reload)
     (wrap-params)))
