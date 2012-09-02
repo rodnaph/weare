@@ -1,5 +1,6 @@
 
 (ns weare.web.auth
+  (:use clojure.pprint)
   (:require [ring.util.response :as response]))
 
 (def login-uri "/login")
@@ -31,6 +32,7 @@
   (fn [req]
     (if (or (has-session? req)
             (is-login-uri? req))
-        (handler req)
+        (assoc-in (handler req)
+                  [:session :user_id] 1)
         (response/redirect login-uri))))
 
