@@ -5,11 +5,13 @@
 (def login-uri "/login")
 (def logout-uri "/logout")
 
-(defn- is-login-uri? [req]
+(defn- ^{:doc "Indicates of the request is for one of the allowed 'login' URIs."}
+  is-login-uri? [req]
   (some #(= % (:uri req))
          [login-uri logout-uri]))
 
-(defn- has-session? [req]
+(defn- ^{:doc "Indicates of the request has a valid session."}
+  has-session? [req]
   (get-in req [:session :user_id]))
 
 ;; Public
