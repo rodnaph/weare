@@ -24,3 +24,7 @@
         (form-to {} ["POST" "/jobs"]
           (submit-button {} "Create Job"))]]))
 
+(defn login [req]
+  (layouts/standard "Login"
+    "Please Login!"))
+

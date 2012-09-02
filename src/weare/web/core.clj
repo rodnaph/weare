@@ -1,6 +1,7 @@
 
 (ns weare.web.core
   (:use compojure.core
+        [weare.web.auth :only [wrap-login]]
         (ring.middleware [reload :only [wrap-reload]]
                          [stacktrace :only [wrap-stacktrace]]
                          [params :only [wrap-params]]
@@ -10,14 +11,9 @@
             (weare.web [pages :as pages]
                        [actions :as actions])))
 
-(defn wrap-login [handler]
-  (fn [req]
-    (if (get-in req [:session :user_id])
-        (handler req)
-        {:status 301})))
-
 (defroutes app-routes
   (GET "/" [] pages/home)
+  (GET "/login" [] pages/login)
   (POST "/jobs" [] actions/job-create)
   (route/resources "/")
   (route/not-found "Not found"))
