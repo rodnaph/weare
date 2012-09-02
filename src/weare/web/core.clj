@@ -12,11 +12,19 @@
                        [actions :as actions])))
 
 (defroutes app-routes
+
   (GET "/" [] pages/home)
+
   (GET "/login" [] pages/login)
+  (POST "/login" [] actions/user-login)
+  (ANY "/logout" [] actions/user-logout)
+
   (POST "/jobs" [] actions/job-create)
-  (route/resources "/")
-  (route/not-found "Not found"))
+
+  (route/resources "/assets")
+  (route/not-found "Not found")
+
+)
 
 (def dev? true)
 

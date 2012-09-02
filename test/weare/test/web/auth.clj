@@ -13,6 +13,7 @@
 
   (handler {:uri "/login"}) => true
   (handler {:uri "/logout"}) => true
+  (handler {:uri "/assets/css/main.css"}) => true
 
 )
 

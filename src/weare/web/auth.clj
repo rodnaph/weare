@@ -4,11 +4,20 @@
 
 (def login-uri "/login")
 (def logout-uri "/logout")
+(def assets-uri "/assets")
 
-(defn- ^{:doc "Indicates of the request is for one of the allowed 'login' URIs."}
+(defn- starts-with [string substring]
+  (= 0 (.indexOf (or string "") substring)))
+
+(defn- is-asset-uri? [uri]
+  (starts-with uri "/assets/")) 
+
+(defn- ^{:doc "Indicates if the request is for one of the allowed 'login' URIs."}
   is-login-uri? [req]
-  (some #(= % (:uri req))
-         [login-uri logout-uri]))
+  (let [uri (:uri req)]
+    (or (= login-uri uri)
+        (= logout-uri uri)
+        (is-asset-uri? uri))))
 
 (defn- ^{:doc "Indicates of the request has a valid session."}
   has-session? [req]

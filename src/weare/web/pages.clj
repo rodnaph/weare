@@ -26,5 +26,7 @@
 
 (defn login [req]
   (layouts/standard "Login"
-    "Please Login!"))
+    [:div.row
+      [:div.span8
+        (form-to {} ["POST" "/login"])]]))
 

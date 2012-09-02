@@ -10,3 +10,9 @@
   (jobs/add! {:type "blah"})
   (response/redirect-after-post "/"))
 
+(defn user-login [req]
+  req)
+
+(defn user-logout [req]
+  req)
+
