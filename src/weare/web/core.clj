@@ -46,7 +46,7 @@
 (def app
   (-> app-routes
     (handler/site :session)
-    (wrap-lint)
+    (wrap-if dev? wrap-lint)
     (wrap-if dev? wrap-stacktrace)
     (wrap-if dev? wrap-reload)))
 
