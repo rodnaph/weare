@@ -15,5 +15,6 @@
             [:session :user_id] 1))
 
 (defn user-logout [req]
-  (dissoc (response/redirect "/") :session))
+  (merge (response/redirect "/")
+         {:session nil}))
 

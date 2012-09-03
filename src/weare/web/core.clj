@@ -2,19 +2,20 @@
 (ns weare.web.core
   (:use compojure.core
         [weare.web.auth :only [wrap-login]]
-        (ring.middleware [reload :only [wrap-reload]]
+        (ring.middleware [lint :only [wrap-lint]]
+                         [reload :only [wrap-reload]]
                          [stacktrace :only [wrap-stacktrace]]))
-  (:require [cemerick.friend :as friend]
-            (cemerick.friend [workflows :as workflows]
-                             [credentials :as creds])
-            (compojure [handler :as handler]
+  (:require (compojure [handler :as handler]
                        [route :as route])
             (weare.web [pages :as pages]
                        [actions :as actions])))
 
 (defroutes user-routes
   (GET "/" [] "USER PAGE")
-  (GET "/account" request "Show Account"))
+  (GET "/account" request "SSShow Account"))
+
+(defroutes job-routes
+  (POST "/" [] actions/job-create))
 
 (defroutes app-routes
 
@@ -23,11 +24,12 @@
   (context "/user" []
     (wrap-login user-routes))
 
+  (context "/jobs" []
+    (wrap-login job-routes))
+
   (GET "/login" [] pages/login)
   (POST "/login" [] actions/user-login)
   (ANY "/logout" [] actions/user-logout)
-
-  (POST "/jobs" [] actions/job-create)
 
   (route/resources "/assets")
   (route/not-found "Not found")
@@ -43,7 +45,8 @@
 
 (def app
   (-> app-routes
-    (handler/site)
+    (handler/site :session)
+    (wrap-lint)
     (wrap-if dev? wrap-stacktrace)
     (wrap-if dev? wrap-reload)))
 
