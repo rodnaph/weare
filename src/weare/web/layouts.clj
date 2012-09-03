@@ -3,8 +3,11 @@
   (:require [weare.web.auth :as auth]
             [hiccup.page :as page]))
 
+(defn- nav-item [title url]
+  [:li
+    [:a {:href url} title]])
+
 (defn- session-link []
-  (println "User:" (auth/user))
   [:li
     (if-let [user (auth/user)]
       [:a {:href "/logout"} (format "Logout %s" (:name user))]
@@ -25,11 +28,11 @@
           [:div.span12
             [:div.navbar
               [:div.navbar-inner
+                [:a.brand {:href "/"} "We Are"]
+                [:ul.nav
+                  (nav-item "Sources" "/user/sources")]
                 [:ul.nav.pull-right
-                  (session-link)]]]]
-          [:div.span12
-            [:header
-              [:h1 "We Are..."]]]]
+                  (session-link)]]]]]
         body
         [:footer
           "Copyright Me"]

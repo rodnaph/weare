@@ -28,13 +28,20 @@
   (layouts/standard "Login"
     [:div.row
       [:div.span8
-        (form-to {} ["POST" "/login"]
-          [:div.row
+        (form-to {:class "form-horizontal"} ["POST" "/login"]
+          [:div.control-group
            (label {} "email" "Email")
            (text-field {} "email")]
-          [:div.row
+          [:div.control-group
            (label {} "pass" "Password:")
            (password-field {} "pass")]
-          [:div.row
-           (submit-button "Login")])]]))
+          [:div.control-group
+           (submit-button {:class "btn btn-primary"} "Login")])]]))
+
+(defn not-found [req]
+  (layouts/standard "Uh oh..."
+    [:div.row
+      [:div.span12
+        [:h2 "Not here sorry..."]
+        [:p "Looks like the thing you want ain't here."]]]))
 

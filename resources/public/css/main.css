@@ -1,5 +1,11 @@
 
 body {
-    background-color: #bbb;
+    margin: 20px;
+}
+
+footer {
+    text-align: center;
+    margin: 20px 0 20px 0;
+    color: #aaa;
 }
 

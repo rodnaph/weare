@@ -32,7 +32,7 @@
   (ANY "/logout" [] actions/user-logout)
 
   (route/resources "/assets")
-  (route/not-found "Not found")
+  (route/not-found pages/not-found)
 
 )
 
