@@ -1,7 +1,7 @@
 
 (ns weare.web.core
   (:use compojure.core
-        [weare.web.auth :only [wrap-login]]
+        [weare.web.auth :only [wrap-login wrap-user]]
         (ring.middleware [lint :only [wrap-lint]]
                          [reload :only [wrap-reload]]
                          [stacktrace :only [wrap-stacktrace]]))
@@ -44,7 +44,7 @@
     handler))
 
 (def app
-  (-> app-routes
+  (-> (wrap-user app-routes)
     (handler/site :session)
     (wrap-if dev? wrap-lint)
     (wrap-if dev? wrap-stacktrace)

@@ -1,6 +1,17 @@
 
 (ns weare.web.layouts
-  (:require [hiccup.page :as page]))
+  (:require [weare.web.auth :as auth]
+            [hiccup.page :as page]))
+
+(defn- session-link []
+  (println "User:" (auth/user))
+  [:li
+    (if-let [user (auth/user)]
+      [:a {:href "/logout"} (format "Logout %s" (:name user))]
+      [:a {:href "/login"} "Login"])])
+
+;; Public
+;; ------
 
 (defn standard [title body]
   (page/html5
@@ -11,6 +22,11 @@
     [:body
       [:div.container
         [:div.row
+          [:div.span12
+            [:div.navbar
+              [:div.navbar-inner
+                [:ul.nav
+                  (session-link)]]]]
           [:div.span12
             [:header
               [:h1 "We Are..."]]]]

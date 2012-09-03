@@ -30,11 +30,11 @@
       [:div.span8
         (form-to {} ["POST" "/login"]
           [:div.row
-           (label {} "username" "Username:")
-           (text-field {} "username")]
+           (label {} "email" "Email")
+           (text-field {} "email")]
           [:div.row
-           (label {} "password" "Password:")
-           (password-field {} "password")]
+           (label {} "pass" "Password:")
+           (password-field {} "pass")]
           [:div.row
            (submit-button "Login")])]]))
 

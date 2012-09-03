@@ -7,7 +7,9 @@
 
 (facts "about requiring login handler"
 
-  (handler {:session {:user_id 1}}) => true
+  (handler {:session {:user {:name "foo"}}}) => true
+
+  (handler {:session {:user nil}}) => (contains {:status 302})
   (handler {}) => (contains {:status 302})
 
 )

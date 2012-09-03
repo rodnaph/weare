@@ -14,11 +14,10 @@ create table groups (
 
 create table users (
 	id int unsigned not null auto_increment,
-	title varchar(255) not null,
+	name varchar(255) not null,
 	email varchar(255) not null,
-	pass char(32) not null,
+	pass char(40) not null,
 	date_created datetime not null,
-	unique ( title ),
 	unique ( email ),
 	primary key ( id )
 );
@@ -53,7 +52,7 @@ create table sources (
 
 insert into groups ( title, date_created ) values ( 'Default Group', '2012-09-02 16:47:00' );
 
-insert into users ( title, email, pass, date_created ) values ( 'test', 'test@example.com', password('pass'), '2012-09-01 21:17:00' );
+insert into users ( name, email, pass, date_created ) values ( 'Test User', 'test@example.com', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', '2012-09-01 21:17:00' );
 
 insert into user_groups ( user_id, group_id ) values ( 1, 1 );
 
