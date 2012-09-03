@@ -22,7 +22,8 @@
         (handler req)
         (response/redirect login-uri))))
 
-(defn wrap-user [handler]
+(defn ^{:doc "Add binding for user in session."}
+  wrap-user [handler]
   (fn [req]
     (binding [*user* (user-in req)]
       (handler req))))
