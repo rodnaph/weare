@@ -25,7 +25,7 @@
           [:div.span12
             [:div.navbar
               [:div.navbar-inner
-                [:ul.nav
+                [:ul.nav.pull-right
                   (session-link)]]]]
           [:div.span12
             [:header
