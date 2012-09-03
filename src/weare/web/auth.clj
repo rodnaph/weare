@@ -15,7 +15,6 @@
   wrap-login [handler]
   (fn [req]
     (if (has-session? req)
-        (assoc-in (handler req)
-                  [:session :user_id] 1)
+        (handler req)
         (response/redirect login-uri))))
 
