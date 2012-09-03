@@ -15,18 +15,12 @@
   (GET "/sources" [] pages/sources)
   (POST "/sources" [] actions/source-create))
 
-(defroutes job-routes
-  (POST "/" [] actions/job-create))
-
 (defroutes app-routes
 
   (GET "/" [] pages/home)
 
   (context "/user" []
     (wrap-login user-routes))
-
-  (context "/jobs" []
-    (wrap-login job-routes))
 
   (GET "/login" [] pages/login)
   (POST "/login" [] actions/user-login)
