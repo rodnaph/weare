@@ -1,20 +1,40 @@
 
 (ns weare.web.core
   (:use compojure.core
-        [ring.middleware.reload :only [wrap-reload]]
-        [ring.middleware.stacktrace :only [wrap-stacktrace]]
-        [ring.middleware.params :only [wrap-params]])
-  (:require [compojure.handler :as handler]
-            [compojure.route :as route]
-            [weare.web.pages :as pages]
-            [weare.web.actions :as actions])
-  (:gen-class :main true))
+        [weare.web.auth :only [wrap-login]]
+        (ring.middleware [lint :only [wrap-lint]]
+                         [reload :only [wrap-reload]]
+                         [stacktrace :only [wrap-stacktrace]]))
+  (:require (compojure [handler :as handler]
+                       [route :as route])
+            (weare.web [pages :as pages]
+                       [actions :as actions])))
+
+(defroutes user-routes
+  (GET "/" [] "USER PAGE")
+  (GET "/account" request "SSShow Account"))
+
+(defroutes job-routes
+  (POST "/" [] actions/job-create))
 
 (defroutes app-routes
+
   (GET "/" [] pages/home)
-  (POST "/jobs" [] actions/job-create)
-  (route/resources "/")
-  (route/not-found "Not found"))
+
+  (context "/user" []
+    (wrap-login user-routes))
+
+  (context "/jobs" []
+    (wrap-login job-routes))
+
+  (GET "/login" [] pages/login)
+  (POST "/login" [] actions/user-login)
+  (ANY "/logout" [] actions/user-logout)
+
+  (route/resources "/assets")
+  (route/not-found "Not found")
+
+)
 
 (def dev? true)
 
@@ -25,8 +45,8 @@
 
 (def app
   (-> app-routes
-    (handler/site)
+    (handler/site :session)
+    (wrap-if dev? wrap-lint)
     (wrap-if dev? wrap-stacktrace)
-    (wrap-if dev? wrap-reload)
-    (wrap-params)))
+    (wrap-if dev? wrap-reload)))
 

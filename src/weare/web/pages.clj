@@ -24,3 +24,17 @@
         (form-to {} ["POST" "/jobs"]
           (submit-button {} "Create Job"))]]))
 
+(defn login [req]
+  (layouts/standard "Login"
+    [:div.row
+      [:div.span8
+        (form-to {} ["POST" "/login"]
+          [:div.row
+           (label {} "username" "Username:")
+           (text-field {} "username")]
+          [:div.row
+           (label {} "password" "Password:")
+           (password-field {} "password")]
+          [:div.row
+           (submit-button "Login")])]]))
+

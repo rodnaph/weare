@@ -10,3 +10,11 @@
   (jobs/add! {:type "blah"})
   (response/redirect-after-post "/"))
 
+(defn user-login [req]
+  (assoc-in (response/redirect "/")
+            [:session :user_id] 1))
+
+(defn user-logout [req]
+  (merge (response/redirect "/")
+         {:session nil}))
+
