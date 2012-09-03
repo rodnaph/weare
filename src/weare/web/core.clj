@@ -12,7 +12,8 @@
 
 (defroutes user-routes
   (GET "/" [] "USER PAGE")
-  (GET "/account" request "SSShow Account"))
+  (GET "/sources" [] pages/sources)
+  (POST "/sources" [] actions/source-create))
 
 (defroutes job-routes
   (POST "/" [] actions/job-create))

@@ -21,8 +21,7 @@
           (for [activity (groups/activity)]
             [:li (render-activity activity)])]]
       [:div.span4
-        (form-to {} ["POST" "/jobs"]
-          (submit-button {} "Create Job"))]]))
+        "PROFIT FOCUSED ADVERTISING WILL GO HERE :E"]]))
 
 (defn login [req]
   (layouts/standard "Login"
@@ -44,4 +43,14 @@
       [:div.span12
         [:h2 "Not here sorry..."]
         [:p "Looks like the thing you want ain't here."]]]))
+
+(defn sources [req]
+  (layouts/standard "Sources"
+    [:div.row
+      [:div.span12
+        (form-to {:class "form-inline"} ["POST" "/user/sources"]
+          (text-field {:placeholder "Enter a URL/RSS/Domain..."} "url")
+          (submit-button {:class "btn btn-small btn-primary"} "ADD"))]
+      [:div.span12
+        [:h2 "My Sources"]]]))
 

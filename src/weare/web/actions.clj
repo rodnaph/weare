@@ -24,10 +24,6 @@
 ;; Public
 ;; ------
 
-(defn job-create [req]
-  (jobs/add! {:type "blah"})
-  (response/redirect-after-post "/"))
-
 (defn user-login [req]
   (let [user (find-user req)
         url (if user "/" "/login")]
@@ -37,4 +33,9 @@
 (defn user-logout [req]
   (merge (response/redirect "/")
          {:session nil}))
+
+(defn source-create [req]
+  (jobs/add! {:type :source-create
+              :url (get-in req [:params :url])})
+  (response/redirect "/user/sources"))
 
