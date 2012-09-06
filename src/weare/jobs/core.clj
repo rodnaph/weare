@@ -1,4 +1,3 @@
-
 (ns ^{:doc "This namespace provides a super-simple in-memory job
   server for easily processing jobs offline."}
   weare.jobs.core)
@@ -17,7 +16,8 @@
   (println "Processing job:" job))
 
 (defn- ^{:doc "Process all the jobs in the queue, popping them off
-  the head of the queue one ata  time."}
+  the head of the queue one at a time.  This could cause re-processing,
+  maybe look at this example: https://www.refheap.com/paste/4903"}
   process-jobs []
   (while (not (empty? @job-queue))
     (dosync
