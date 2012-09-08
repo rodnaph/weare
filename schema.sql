@@ -30,23 +30,24 @@ create table user_groups (
     primary key ( id )
 );
 
-create table activity (
-	id int unsigned not null auto_increment,
-	users_id int unsigned not null,
-	title varchar(255) not null,
-	description varchar(500) null,
-	url varchar(500) null,
-	date_imported datetime not null,
-	date_authored datetime not null,
-	primary key ( id )
-);
-
 create table sources (
 	id int unsigned not null auto_increment,
 	users_id int unsigned not null,
 	type varchar(50) not null,
 	value varchar(500) not null,
 	date_created datetime not null,
+	primary key ( id )
+);
+
+create table activity (
+	id int unsigned not null auto_increment,
+	source_id int unsigned not null,
+	title varchar(255) not null,
+	description varchar(500) null,
+	url varchar(500) null,
+	date_imported datetime not null,
+	date_authored datetime not null,
+    index ( source_id ),
 	primary key ( id )
 );
 

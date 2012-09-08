@@ -17,9 +17,7 @@
   (layouts/standard "Home"
     [:div.row
       [:div.span8
-        [:ul
-          (for [activity (groups/activity)]
-            [:li (render-activity activity)])]]
+        "Welcome to stuff..."]
       [:div.span4
         "PROFIT FOCUSED ADVERTISING WILL GO HERE :E"]]))
 
