@@ -1,7 +1,8 @@
 
 (ns weare.core
   (:use korma.db)
-  (:require [ring.adapter.jetty :as jetty]
+  (:require weare.db
+            [ring.adapter.jetty :as jetty]
             [weare.web.core :as web]
             [weare.jobs.core :as jobs])
   (:gen-class :main true))

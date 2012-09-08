@@ -1,7 +1,8 @@
 
 (ns weare.web.pages
   (:use hiccup.form)
-  (:require [weare.web.layouts :as layouts]
+  (:require [weare.web.auth :as auth]
+            [weare.web.layouts :as layouts]
             [weare.web.groups :as groups]))
 
 (defn- render-activity [a]
@@ -17,7 +18,9 @@
   (layouts/standard "Home"
     [:div.row
       [:div.span8
-        "Welcome to stuff..."]
+        (if-let [user (auth/user)]
+          [:h2 "Activity for " (:name user)]
+          "Welcome to stuff...  Please login...")]
       [:div.span4
         "PROFIT FOCUSED ADVERTISING WILL GO HERE :E"]]))
 

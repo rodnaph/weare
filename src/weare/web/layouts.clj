@@ -3,15 +3,22 @@
   (:require [weare.web.auth :as auth]
             [hiccup.page :as page]))
 
+(def logged-out-links [
+    ["Register" "/register"]
+    ["Login" "/login"]
+])
+
 (defn- nav-item [title url]
   [:li
     [:a {:href url} title]])
 
+(defn- nav-items [items]
+  (map (partial apply nav-item) items))
+
 (defn- session-link []
-  [:li
-    (if-let [user (auth/user)]
-      [:a {:href "/logout"} (format "Logout %s" (:name user))]
-      [:a {:href "/login"} "Login"])])
+  (if-let [user (auth/user)]
+    (nav-item (str "Logout " (:name user)) "/logout")
+    (nav-items logged-out-links)))
 
 ;; Public
 ;; ------

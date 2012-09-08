@@ -14,8 +14,8 @@
 
 (def cnn
   (let [cnn (do
-              (d/create-database uri)
-              (d/connect uri))
+              (d/create-database db-uri)
+              (d/connect db-uri))
         schema [
           (field :user/name :db.type/string)
           (field :user/email :db.type/string)
