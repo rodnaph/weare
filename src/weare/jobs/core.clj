@@ -15,14 +15,18 @@
   process-job [job]
   (println "Processing job:" job))
 
+(defn- ^{:doc "Shift an item from the front of a queue."}
+  shift! [queue]
+  (dosync
+    (let [item (first @queue)]
+      (alter queue rest)
+      item)))
+
 (defn- ^{:doc "Process all the jobs in the queue, popping them off
-  the head of the queue one at a time.  This could cause re-processing,
-  maybe look at this example: https://www.refheap.com/paste/4903"}
+  the head of the queue one at a time."}
   process-jobs []
   (while (not (empty? @job-queue))
-    (dosync
-      (process-job (first @job-queue))
-      (alter job-queue rest))))
+    (process-job (shift! job-queue))))
 
 (defn- ^{:doc "Listen for jobs being added to the job queue and then
   dispatch them for processing when they are."}
